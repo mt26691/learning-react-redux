@@ -1,24 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import { Container, Header, Statistic } from 'semantic-ui-react';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header as="h1">Budget</Header>
+      <Statistic size="small">
+        <Statistic.Label>Your Balance:</Statistic.Label>
+        <Statistic.Value>2,550.53</Statistic.Value>
+      </Statistic>
+    </Container>
   );
 }
 
