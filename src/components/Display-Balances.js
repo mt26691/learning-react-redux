@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Grid, Icon, Segment, Statistic } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 import DisplayBalance from './DisplayBalance';
 
-const DisplayBalances = ({ title, value, color = 'black', size = "tiny" }) => {
+const DisplayBalances = ({  }) => {
     return (<Segment textAlign="center">
         <Grid columns={2} divided>
             <Grid.Row>
