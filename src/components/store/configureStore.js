@@ -1,13 +1,14 @@
 import { createStore, combineReducers } from 'redux';
 import entriesReducer from '../reducers/entries.reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const combinedReducers = combineReducers({
     entries: entriesReducer
 })
 
 const configureStore = () => {
-    return createStore(combinedReducers);
+    return createStore(combinedReducers, composeWithDevTools(
+    ));
 }
-const store = createStore(combinedReducers);
 
 export default configureStore;
