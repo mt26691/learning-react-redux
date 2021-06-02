@@ -12,25 +12,25 @@ const initialEntries = [
   {
     id: 1,
     description: 'Work Income',
-    value: '$1000,00',
+    value: 1000,
     isExpense: false
   },
   {
     id: 2,
     description: 'Water bill',
-    value: '$10,00',
+    value: 10,
     isExpense: true
   },
   {
     id: 3,
     description: 'Rental fee',
-    value: '$300,00',
+    value: 300,
     isExpense: true
   },
   {
     id: 4,
     description: 'Power Bill',
-    value: '$50,00',
+    value: 50,
     isExpense: true
   },
 ];
@@ -42,6 +42,9 @@ function App() {
   const [isExpense, setIsExpense] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [entryId, setEntryId] = useState();
+  const [incomeTotal, setIncomeTotal] = useState(0);
+  const [expenseTotal, setExpenseTotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     if (!isOpen && entryId) {
@@ -54,6 +57,23 @@ function App() {
       resetEntry();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    let totalIncomes = 0;
+    let totalExpenses = 0;
+
+    entries.map(t => {
+      if (t.isExpense) {
+        totalExpenses += Number(t.value);
+      }
+      else {
+        totalIncomes += Number(t.value);
+      }
+    });
+    setIncomeTotal(totalIncomes);
+    setExpenseTotal(totalExpenses);
+    setTotal(totalIncomes - totalExpenses);
+  }, [entries])
 
   function resetEntry() {
     setEntryId()
@@ -87,8 +107,8 @@ function App() {
   return (
     <Container>
       <MainHeader title="Budget"></MainHeader>
-      <DisplayBalance title="Your Balance:" value="2,550.53" color="black" size="small" />
-      <DisplayBalances />
+      <DisplayBalance title="Your Balance:" value={total} color="black" size="small" />
+      <DisplayBalances totalIncomes={incomeTotal} totalExpenses={expenseTotal} />
       <MainHeader title="History" type="h3"></MainHeader>
       <EntryLines entries={entries} deleteEntry={deleteEntry} editEntry={editEntry} />
       <MainHeader title="Add New Transaction" type="h3"></MainHeader>
