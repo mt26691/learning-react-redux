@@ -56,6 +56,7 @@ function App() {
       setEntries(newEntries);
       resetEntry();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   useEffect(() => {
@@ -64,10 +65,10 @@ function App() {
 
     entries.map(t => {
       if (t.isExpense) {
-        totalExpenses += Number(t.value);
+        return totalExpenses += Number(t.value);
       }
       else {
-        totalIncomes += Number(t.value);
+        return totalIncomes += Number(t.value);
       }
     });
     setIncomeTotal(totalIncomes);
