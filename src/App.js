@@ -7,35 +7,9 @@ import DisplayBalances from './components/Display-Balances';
 import { useEffect, useState } from 'react';
 import EntryLines from './components/EntryLines';
 import ModalEdit from './components/ModalEdit';
+import { useSelector } from 'react-redux';
 
-const initialEntries = [
-  {
-    id: 1,
-    description: 'Work Income',
-    value: 1000,
-    isExpense: false
-  },
-  {
-    id: 2,
-    description: 'Water bill',
-    value: 10,
-    isExpense: true
-  },
-  {
-    id: 3,
-    description: 'Rental fee',
-    value: 300,
-    isExpense: true
-  },
-  {
-    id: 4,
-    description: 'Power Bill',
-    value: 50,
-    isExpense: true
-  },
-];
 function App() {
-  const [entries, setEntries] = useState(initialEntries);
 
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
@@ -45,6 +19,7 @@ function App() {
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const entries = useSelector(state => state.entries);
 
   useEffect(() => {
     if (!isOpen && entryId) {
@@ -53,10 +28,10 @@ function App() {
       newEntries[index].description = description;
       newEntries[index].isExpense = isExpense;
       newEntries[index].value = value;
-      setEntries(newEntries);
+      // setEntries(newEntries);
       resetEntry();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   useEffect(() => {
@@ -82,10 +57,6 @@ function App() {
     setValue('');
     setIsExpense(true);
   }
-  function deleteEntry(id) {
-    const result = entries.filter(t => t.id !== id);
-    setEntries(result);
-  }
 
   function editEntry(id) {
     if (id) {
@@ -101,7 +72,7 @@ function App() {
 
   function addEntry() {
     const result = entries.concat({ id: entries.length + 1, description: description, value: value, isExpense: isExpense });
-    setEntries(result);
+    // setEntries(result);
     resetEntry();
   }
 
@@ -111,9 +82,9 @@ function App() {
       <DisplayBalance title="Your Balance:" value={total} color="black" size="small" />
       <DisplayBalances totalIncomes={incomeTotal} totalExpenses={expenseTotal} />
       <MainHeader title="History" type="h3"></MainHeader>
-      <EntryLines entries={entries} deleteEntry={deleteEntry} editEntry={editEntry} />
+      <EntryLines entries={entries} editEntry={editEntry} />
       <MainHeader title="Add New Transaction" type="h3"></MainHeader>
-      <NewEntryForm description={description} value={value} isExpense={isExpense} setDescription={setDescription} setValue={setValue} setIsExpense={setIsExpense} addEntry={addEntry} />
+      <NewEntryForm />
       <ModalEdit isOpen={isOpen} setIsOpen={setIsOpen} description={description} value={value} isExpense={isExpense} setDescription={setDescription} setValue={setValue} setIsExpense={setIsExpense} />
     </Container>
   );
