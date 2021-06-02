@@ -11,28 +11,18 @@ import { useSelector } from 'react-redux';
 
 function App() {
 
-  const [description, setDescription] = useState('');
-  const [value, setValue] = useState('');
-  const [isExpense, setIsExpense] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [entryId, setEntryId] = useState();
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const entries = useSelector(state => state.entries);
+  const { isOpen, id } = useSelector(state => state.modals);
+  const [entry, setEntry] = useState();
 
   useEffect(() => {
-    if (!isOpen && entryId) {
-      const index = entries.findIndex(t => t.id === entryId);
-      const newEntries = [...entries];
-      newEntries[index].description = description;
-      newEntries[index].isExpense = isExpense;
-      newEntries[index].value = value;
-      // setEntries(newEntries);
-      resetEntry();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+    const index = entries.findIndex(entry => entry.id === id);
+    setEntry(entries[index]);
+  }, [isOpen, id])
+
 
   useEffect(() => {
     let totalIncomes = 0;
@@ -51,30 +41,6 @@ function App() {
     setTotal(totalIncomes - totalExpenses);
   }, [entries])
 
-  function resetEntry() {
-    setEntryId()
-    setDescription('');
-    setValue('');
-    setIsExpense(true);
-  }
-
-  function editEntry(id) {
-    if (id) {
-      const index = entries.findIndex(t => t.id === id);
-      const entry = entries[index];
-      setDescription(entry.description);
-      setValue(entry.value);
-      setIsExpense(entry.isExpense);
-      setIsOpen(true);
-      setEntryId(id);
-    }
-  }
-
-  function addEntry() {
-    const result = entries.concat({ id: entries.length + 1, description: description, value: value, isExpense: isExpense });
-    // setEntries(result);
-    resetEntry();
-  }
 
   return (
     <Container>
@@ -82,10 +48,10 @@ function App() {
       <DisplayBalance title="Your Balance:" value={total} color="black" size="small" />
       <DisplayBalances totalIncomes={incomeTotal} totalExpenses={expenseTotal} />
       <MainHeader title="History" type="h3"></MainHeader>
-      <EntryLines entries={entries} editEntry={editEntry} />
+      <EntryLines entries={entries} />
       <MainHeader title="Add New Transaction" type="h3"></MainHeader>
       <NewEntryForm />
-      <ModalEdit isOpen={isOpen} setIsOpen={setIsOpen} description={description} value={value} isExpense={isExpense} setDescription={setDescription} setValue={setValue} setIsExpense={setIsExpense} />
+      <ModalEdit isOpen={isOpen} {...entry} />
     </Container>
   );
 }

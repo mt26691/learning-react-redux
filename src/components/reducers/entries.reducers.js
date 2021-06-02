@@ -36,6 +36,11 @@ const reducer = (state = initialEntries, action) => {
             return newEntries;
         case 'REMOVE_ENTRY':
             return state.filter(t => t.id !== action.payload.id);
+        case 'UPDATE_ENTRY':
+            newEntries = [...state];
+            const index = newEntries.findIndex(t => t.id === action.payload.id);
+            newEntries[index] = { ...action.payload.entry }
+            return newEntries;
         default:
             break;
     }
