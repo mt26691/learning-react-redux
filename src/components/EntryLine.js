@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { Grid, Icon, Segment } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
-import { removeEntryRedux } from './actions/entries.actions';
-import { openEditModal } from './actions/modals.action';
+import { removeEntryRedux } from '../actions/entries.actions';
+import { openEditModal } from '../actions/modals.action';
 
 const EntryLine = ({ id, description, value, isExpense = false }) => {
     const color = isExpense ? 'red' : 'green';
