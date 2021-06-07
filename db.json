@@ -1,0 +1,28 @@
+{
+    "entries": [
+        {
+            "id": 1,
+            "description": "Work Income",
+            "value": 1000,
+            "isExpense": false
+        },
+        {
+            "id": 2,
+            "description": "Water bill",
+            "value": 10,
+            "isExpense": true
+        },
+        {
+            "id": 3,
+            "description": "Rental fee",
+            "value": 300,
+            "isExpense": true
+        },
+        {
+            "id": 4,
+            "description": "Power Bill1",
+            "value": 50,
+            "isExpense": true
+        }
+    ]
+}
